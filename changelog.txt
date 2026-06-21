@@ -1,0 +1,147 @@
+========== v1.0 ==========
+Berikut adalah rangkuman seluruh fitur yang telah berhasil dibuat dan diimplementasikan pada project **PocketFin** dari awal hingga pembuatan grafik cashflow dinamis:
+
+### 1. Fondasi Aplikasi & Tema Visual (Wealth Magnet)
+*   **Desain Premium & Harmonis:** Menggunakan palet warna bertema kekayaan (*Wealth Magnet*): Forest Navy (`#0A1118` sebagai background utama), Wealth Green (`#10B981` untuk angka positif/pemasukan), dan Prosperity Gold (`#F59E0B` untuk tombol aksi, highlight, dan tabungan).
+*   **Tipografi Modern:** Menggunakan Google Fonts **Outfit** yang elegan dan bersih.
+*   **Navigasi Sidebar:** Sidebar statis premium di sebelah kiri untuk berpindah halaman dengan mulus (*Home, Analisis, Tabungan, Profil*).
+
+### 2. Backend Server & Database (SQLite)
+*   **Database Relasional:** Menggunakan SQLite (`better-sqlite3`) yang ringan dan andal untuk menyimpan data secara lokal di `server/pocketfin.db`.
+*   **REST API Express:** Menyediakan endpoint untuk:
+    *   Mengambil dan menambah transaksi (pemasukan & pengeluaran).
+    *   Mengambil, menambah, dan mengubah data Pockets (kantong tabungan) beserta target & jumlah tabungan rutinnya.
+
+### 3. Halaman Dashboard Utama (Home)
+*   **Balance Card (Ringkasan Saldo):** Menampilkan total saldo saat ini beserta indikator akumulasi pemasukan dan pengeluaran bulan ini.
+*   **Quick Actions (Tambah Transaksi):** Form interaktif untuk mencatat transaksi baru secara instan dengan kategori (Makanan, Gaji, Hiburan, dll.) serta tipe transaksi yang langsung memengaruhi saldo utama.
+*   **Daftar Aktivitas Terakhir:** Menampilkan riwayat transaksi terbaru yang diperbarui secara real-time setelah transaksi baru ditambahkan.
+
+### 4. Fitur Pockets & Smart Projection (Halaman Tabungan)
+*   **Manajemen Kantong Tabungan (Pockets):** Pengguna dapat membuat alokasi tabungan khusus dengan target nominal, jumlah tabungan rutin harian/mingguan/bulanan.
+*   **Smart Projection (Proyeksi Cerdas Dinamis):** 
+    *   Menghitung secara otomatis sisa target yang harus dipenuhi.
+    *   Memproyeksikan **tanggal estimasi selesai** secara dinamis berdasarkan sisa target dan nominal tabungan rutin.
+    *   Jika pengguna melakukan top-up tabungan (menabung lebih banyak) atau mengubah nominal rutin, tanggal proyeksi selesai akan **langsung maju/mundur secara otomatis** secara real-time.
+
+### 5. Halaman Analisis Finansial
+*   **Donut Chart Kategori Pengeluaran:** Menggunakan library **Recharts** untuk visualisasi persentase pengeluaran berdasarkan kategori secara interaktif (dengan hover tooltip).
+*   **Daftar Pengeluaran Terbesar:** Menampilkan daftar kategori pengeluaran teratas untuk membantu pengguna mengidentifikasi pemborosan.
+*   **Log Transaksi Lengkap:** Daftar seluruh transaksi historis yang dilengkapi dengan tombol **Delete (Hapus)** untuk membatalkan atau merapikan catatan keuangan.
+
+### 6. Grafik Cashflow Dinamis (Home Page)
+*   **Visualisasi Arus Kas:** Menggunakan **Recharts Area Chart** dengan efek gradien warna hijau (*Wealth Green*) untuk pemasukan dan kuning (*Prosperity Gold*) untuk pengeluaran.
+*   **Sinkronisasi Data Real-time:** Grafik ini otomatis membaca data transaksi dari database, mengelompokkannya per tanggal, dan memperbarui garis tren secara langsung setiap kali ada transaksi baru yang masuk atau dihapus.
+
+========== v1.1 ==========
+## Design System Overhaul
+- **Color palette** changed from warm brown/gold → dark blue near-black (`#0a0e1a` background, cool navy surfaces)
+- **Primary/buttons** changed to white with dark navy text
+- **Sidebar** active state is solid white; accent elements use indigo (`#818cf8`)
+- **Currency** changed from `$` → `Rp` (Indonesian Rupiah with `id-ID` locale)
+- **Number input spinners** hidden via CSS — manual typing only
+
+## Layout & Navigation
+- **Branding** renamed from "PocketFin" → "Wealth Magnet" with "WEALTH MANAGEMENT" subtitle
+- **Sidebar nav items**: Home, Tabungan, Analisis, Setting (bottom)
+- **Database** renamed from `pocketfin.db` → `AkuKaya.db`
+- **Dev server** unified with `npm start` using `concurrently` (frontend + backend together)
+
+## Home Page (Dashboard)
+- **Header**: "Dashboard" + "Welcome back, User"
+- **3 metric cards**: Total Balance, Monthly Income, Monthly Expenses — all with progress bars
+- **Percentages** calculated dynamically from real database data (month-over-month comparison)
+- **Quick Transfer** inline form (Expense/Income toggle, amount, category dropdown, note, submit)
+- **Recent Activities** list replacing the old cashflow chart — shows transaction icons, amounts, status badges
+
+## Tabungan (Savings) Page
+- **Large pocket cards** with status badges ("On Track"/"Needs Attention"), 4 metric sub-cards, progress bars
+- **Three-dot dropdown menu** on each card: View Savings Details, Savings Log, Delete Pocket
+- **Savings History Modal** — shows all savings entries with dates, times, amounts, notes
+- **Savings Log Modal** — Increase/Decrease toggle, nominal input, 4 preset buttons (25K, 50K, 75K, 1M), description field
+- **Smart Projection panel** (right side):
+  - Exact date calculation (e.g., "15 Juli 2027") with duration info
+  - Dynamic slider with adjustable min/max based on pocket values
+  - Number input alongside slider for typing exact amounts
+  - Daily/Weekly/Monthly frequency toggle
+  - Projection area chart
+  - Indigo accent styling throughout
+
+## Analisis (Analytics) Page
+- **Title**: "Analisis Finansial"
+- **4 KPI cards**: Total Portfolio, Monthly Income, Monthly Expenses, Liquid Cash — all with real % change chips
+- **Donut chart** with legend and CSV export button
+- **Top Expenses list** with colored progress bars
+- **Transaction History table** with DATE, DESCRIPTION, CATEGORY, STATUS (badge), AMOUNT, ACTION columns + type filter
+
+## Modals
+- **TransactionModal, PocketModal, AddSavingsModal** — all restyled with dark blue theme, `Rp` prefix, white buttons
+- **SavingsHistoryModal** (new) — read-only history viewer
+- **SavingsLogModal** (new) — increase/decrease savings with presets
+
+## Backend
+- Server log messages updated to "AkuKaya" branding
+- Negative balance guard on savings withdrawal
+- `getPocketDetail` API added to frontend utils
+
+## Files Changed: ~20 | Files Created: 2 (SavingsHistoryModal, SavingsLogModal)
+
+========== v1.2 ==========
+### Pie Chart Tooltip (AnalisisPage)
+- **Fixed** custom tooltip to follow mouse position using quadrant-based positioning (left/right/top/bottom of center)
+- **Added** graceful fallback (top-right corner) if container lookup fails
+- **Added** `whitespace-nowrap` to prevent tooltip text wrapping
+- **Removed** unused `Tooltip` import from Recharts
+
+### Recent Activities (CashflowChart)
+- **Removed** "View All →" button (list is already scrollable)
+- **Changed** expense icon from gray to red (`bg-error/10 text-error`), income stays green
+
+### Top Expenses List (AnalisisPage)
+- **Removed** "View All Categories" button
+- **Changed** scroll container from `max-h-64` to `max-h-[400px]` (matches Recent Activities)
+
+### Quick Log (QuickActions)
+- **Renamed** "Quick Transfer" → "Quick Log"
+- **Changed** amount input placeholder from `0.00` to `0`
+
+### Section Titles (bold)
+- **Added** `font-bold` to: "Expense Distribution", "Top Expenses List", "Transaction History", "Recent Activities"
+
+### Analisis Page Filters
+- **Added** sort toggle (ascending/descending) on the Date column header with arrow indicator
+- **Added** time period selector: Month / Week / Year / All toggle + dropdown
+- **Added** year filtering support (generates year list from transaction data)
+- **Swapped** toggle/dropdown positions (dropdown left, toggle right) to prevent layout shift when "All" hides the dropdown
+- **Updated** Expense Distribution subtitle to show selected period name
+- **Updated** donut center total and legend percentages to reflect selected period
+- **Updated** Transaction History to filter by selected period + sort order
+- **Removed** static "Filter" button (type dropdown handles it)
+
+### Amount Input Placeholders
+- **Changed** `placeholder="0.00"` → `placeholder="0"` in QuickActions, TransactionModal, and AddSavingsModal
+
+### Currency & Input
+- All amounts display as **IDR (Rp)** with Indonesian locale formatting
+- Compact format uses `Rp 1.5Jt` / `Rp 500rb`
+- Number input spinners hidden via CSS
+
+### Cleanup — Deleted Files
+- `src/components/dashboard/PocketList.jsx` — not imported anywhere
+- `src/components/dashboard/TransactionModal.jsx` — dead code (never triggerable)
+- `src/App.css` — unused boilerplate CSS
+
+### Cleanup — App.jsx
+- **Removed** `TransactionModal` and `PocketModal` imports, state, handlers, and rendering (neither could ever be opened)
+- **Removed** unused `handleTxSaved` and `handlePocketSaved` functions
+
+### Page Title Consistency
+- **Changed** Tabungan title from `<h2>` to `<h1>`
+- **Standardized** all page titles to `text-[24px] font-semibold leading-8`
+
+### Page Gap Consistency
+- **Wrapped** Home page content in `<div className="w-full flex flex-col gap-6">` to match Tabungan/Analisis (24px gap between sections)
+
+### .gitignore Updates
+- **Added** `.qoder/` directory (Qoder workspace files)
+- Database and environment files were already added in a prior session

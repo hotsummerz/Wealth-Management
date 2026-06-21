@@ -1,0 +1,101 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.on-surface');
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Custom scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.surface');
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.outline');
+    border-radius: 9999px;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid #1e293b;
+    border-radius: 1rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .glass-card-hover:hover {
+    border-color: #475569;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  }
+
+  .chip-success {
+    background: rgba(78, 222, 163, 0.1);
+    color: #4edea3;
+  }
+  .chip-warning {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+  }
+  .chip-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+  .chip-info {
+    background: rgba(99, 102, 241, 0.1);
+    color: #818cf8;
+  }
+
+  .nav-active {
+    background: #ffffff;
+    color: #111827;
+    font-weight: 700;
+    border-radius: 0.75rem;
+  }
+
+  .progress-bar {
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: #1f2937;
+    overflow: hidden;
+  }
+
+  .chart-grid {
+    background-size: 100% 25%;
+    background-image: linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  }
+  /* Hide number input spinners */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+@layer utilities {
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
