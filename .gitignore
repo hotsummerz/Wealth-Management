@@ -24,6 +24,10 @@ server/AkuKaya.db-wal
 # Qoder
 .qoder
 
+# Notes
+changelog.txt
+notes.txt
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
