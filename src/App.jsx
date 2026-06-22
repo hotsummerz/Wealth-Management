@@ -10,7 +10,7 @@ import Toast from './components/ui/Toast';
 import InstallPrompt from './components/ui/InstallPrompt';
 import AuthPage from './components/auth/AuthPage';
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import { supabase } from './lib/supabase';
+import { supabase } from '../lib/supabase';
 
 function App() {
   const [user, setUser] = useState(null);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../../lib/supabase';
 
 const Sidebar = ({ activeItem, setActiveItem, user }) => {
   const navItems = [

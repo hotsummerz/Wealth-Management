@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 
 async function fetchWithAuth(url, options = {}) {
   const { data: { session } } = await supabase.auth.getSession();
