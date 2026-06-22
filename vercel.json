@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/api/transactions/summary", "destination": "/api/transactions-handler?type=summary" },
+    { "source": "/api/transactions/:id", "destination": "/api/transactions-handler?id=:id" },
+    { "source": "/api/pockets/:id/savings", "destination": "/api/pocket-savings?id=:id" },
+    { "source": "/api/pockets/:id", "destination": "/api/pocket-detail?id=:id" }
+  ],
+  "build": {
+    "env": {
+      "NODE_VERSION": "20"
+    }
+  }
+}

@@ -44,7 +44,7 @@ const CashflowChart = ({ refreshKey }) => {
   };
 
   return (
-    <section className="glass-card rounded-lg p-6 flex flex-col gap-4">
+    <section className="glass-card rounded-lg p-5 sm:p-6 flex flex-col gap-4">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h3 className="font-headline-md text-[18px] text-on-surface font-bold">Recent Activities</h3>

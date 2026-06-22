@@ -236,13 +236,15 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
       {/* Page Title + Period Selector */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h1 className="font-headline-md text-[24px] text-on-surface font-semibold leading-8">Analisis Finansial</h1>
-        <div className="flex items-center gap-2 flex-wrap">
-          {/* Period Dropdown */}
+        <div className="flex items-center justify-end gap-2">
+          {/* Period Dropdown - left of toggle, normal flow */}
           {periodType !== 'all' && (
             <select
+              id="period-value"
+              name="period"
               value={periodValue}
               onChange={(e) => setPeriodValue(e.target.value)}
-              className="bg-surface-container-high border border-outline-variant rounded-lg py-1.5 px-3 text-on-surface text-xs focus:outline-none focus:border-primary cursor-pointer"
+              className="bg-surface-container-high border border-outline-variant rounded-lg py-1.5 px-3 text-on-surface text-xs focus:outline-none focus:border-primary cursor-pointer max-w-[160px]"
             >
               <option value="">Select {periodType}...</option>
               {(periodType === 'month' ? availablePeriods.months : periodType === 'week' ? availablePeriods.weeks : availablePeriods.years).map(p => {
@@ -250,12 +252,12 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
                 let label;
                 if (periodType === 'month') label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
                 else if (periodType === 'week') label = `Week of ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
-                else label = p; // year string like '2026'
+                else label = p;
                 return <option key={p} value={p}>{label}</option>;
               })}
             </select>
           )}
-          {/* Period Type Toggle */}
+          {/* Period Type Toggle - always on the right */}
           <div className="flex bg-surface-container-high rounded-lg p-1 border border-outline-variant/50">
             {[
               { id: 'week', label: 'Week' },
@@ -280,7 +282,7 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
       {/* 4 KPI Cards */}
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {kpiCards.map((card, idx) => (
-          <div key={idx} className="glass-card rounded-lg p-5 flex flex-col gap-2">
+          <div key={idx} className="glass-card rounded-lg p-4 sm:p-5 flex flex-col gap-2">
             <div className="flex items-center gap-2 mb-1">
               <div className="bg-surface-bright p-2 rounded-lg">
                 <span className={`material-symbols-outlined text-[18px] ${card.color}`}>{card.icon}</span>
@@ -290,7 +292,7 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
             {loading ? (
               <div className="h-7 w-24 bg-surface-bright rounded animate-pulse" />
             ) : (
-              <p className={`text-[22px] font-bold ${card.color}`}>{formatIDRCompact(card.value)}</p>
+              <p className={`text-[18px] sm:text-[22px] font-bold ${card.color}`}>{formatIDRCompact(card.value)}</p>
             )}
             {card.change && (
               <div className="flex items-center gap-1">
@@ -307,7 +309,7 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
       {/* Chart + Top Expenses */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Donut Chart */}
-        <div className="glass-card rounded-lg p-6 flex flex-col gap-4">
+        <div className="glass-card rounded-lg p-5 sm:p-6 flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="font-headline-md text-[18px] text-on-surface font-bold">Expense Distribution</h3>
@@ -324,7 +326,7 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
 
           <div className="h-56 w-full relative" onMouseLeave={handlePieMouseLeave}>
             {chartData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <PieChart>
                   <Pie 
                     data={chartData} 
@@ -394,7 +396,7 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
         </div>
 
         {/* Top Expenses List */}
-        <div className="glass-card rounded-lg p-6 flex flex-col gap-4">
+        <div className="glass-card rounded-lg p-5 sm:p-6 flex flex-col gap-4">
           <h3 className="font-headline-md text-[18px] text-on-surface font-bold">Top Expenses List</h3>
           <div className="flex flex-col gap-4 overflow-y-auto max-h-[400px] pr-1">
             {chartData.length > 0 ? chartData.map((item, idx) => {
@@ -422,11 +424,13 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
       </section>
 
       {/* Transaction History Table */}
-      <section className="glass-card rounded-lg p-6 flex flex-col gap-4">
-        <div className="flex justify-between items-center">
+      <section className="glass-card rounded-lg p-5 sm:p-6 flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
           <h3 className="font-headline-md text-[18px] text-on-surface font-bold">Transaction History</h3>
           <div className="flex items-center gap-3">
             <select
+              id="filter-type"
+              name="filterType"
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
               className="bg-surface-container-high border border-outline-variant rounded-lg py-1.5 px-3 text-on-surface text-xs focus:outline-none focus:border-primary cursor-pointer"
@@ -438,8 +442,8 @@ const AnalisisPage = ({ refreshKey, onRefresh }) => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <table className="w-full text-sm min-w-[600px]">
             <thead>
               <tr className="border-b border-outline-variant text-on-surface-variant">
                 <th

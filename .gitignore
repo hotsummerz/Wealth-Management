@@ -9,7 +9,6 @@ lerna-debug.log*
 
 node_modules
 dist
-dist-ssr
 *.local
 
 # Database
@@ -19,7 +18,9 @@ server/AkuKaya.db-wal
 
 # Environment
 .env
-.env.*
+.env.local
+.env.*.local
+!.env.example
 
 # Qoder
 .qoder
@@ -27,6 +28,9 @@ server/AkuKaya.db-wal
 # Notes
 changelog.txt
 notes.txt
+
+# Generated
+vibe_images/
 
 # Editor directories and files
 .vscode/*

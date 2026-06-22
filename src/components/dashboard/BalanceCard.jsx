@@ -82,15 +82,15 @@ const BalanceCard = ({ refreshKey }) => {
   return (
     <>
       {/* Total Balance */}
-      <section className="glass-card rounded-lg p-6 flex flex-col justify-between min-h-[180px]">
-        <div className="flex justify-between items-start mb-4">
+      <section className="glass-card rounded-lg p-5 sm:p-6 flex flex-col justify-between min-h-[150px] sm:min-h-[180px]">
+        <div className="flex justify-between items-start mb-3">
           <h2 className="font-label-sm text-label-sm text-on-surface-variant uppercase">Total Balance</h2>
           <span className="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-full text-[20px]">account_balance_wallet</span>
         </div>
         {loading ? (
-          <div className="h-10 w-48 bg-surface-bright rounded animate-pulse" />
+          <div className="h-8 w-40 bg-surface-bright rounded animate-pulse" />
         ) : (
-          <div className="font-currency-nominal-lg text-currency-nominal-lg text-on-surface">
+          <div className="text-[22px] sm:text-[28px] font-bold text-on-surface tracking-tight">
             {formatIDR(summary.balance)}
           </div>
         )}
@@ -101,15 +101,15 @@ const BalanceCard = ({ refreshKey }) => {
       </section>
 
       {/* Monthly Income */}
-      <section className="glass-card rounded-lg p-6 flex flex-col justify-between min-h-[180px]">
-        <div className="flex justify-between items-start mb-4">
+      <section className="glass-card rounded-lg p-5 sm:p-6 flex flex-col justify-between min-h-[150px] sm:min-h-[180px]">
+        <div className="flex justify-between items-start mb-3">
           <h2 className="font-label-sm text-label-sm text-on-surface-variant uppercase">Monthly Income</h2>
           <span className="material-symbols-outlined text-secondary bg-secondary/10 p-2 rounded-full text-[20px]">arrow_downward</span>
         </div>
         {loading ? (
-          <div className="h-10 w-32 bg-surface-bright rounded animate-pulse" />
+          <div className="h-8 w-28 bg-surface-bright rounded animate-pulse" />
         ) : (
-          <div className="font-currency-nominal-lg text-currency-nominal-lg text-on-surface">
+          <div className="text-[22px] sm:text-[28px] font-bold text-on-surface tracking-tight">
             {formatIDR(monthly.income)}
           </div>
         )}
@@ -125,15 +125,15 @@ const BalanceCard = ({ refreshKey }) => {
       </section>
 
       {/* Monthly Expenses */}
-      <section className="glass-card rounded-lg p-6 flex flex-col justify-between min-h-[180px]">
-        <div className="flex justify-between items-start mb-4">
+      <section className="glass-card rounded-lg p-5 sm:p-6 flex flex-col justify-between min-h-[150px] sm:min-h-[180px]">
+        <div className="flex justify-between items-start mb-3">
           <h2 className="font-label-sm text-label-sm text-on-surface-variant uppercase">Monthly Expenses</h2>
           <span className="material-symbols-outlined text-error bg-error/10 p-2 rounded-full text-[20px]">arrow_upward</span>
         </div>
         {loading ? (
-          <div className="h-10 w-32 bg-surface-bright rounded animate-pulse" />
+          <div className="h-8 w-28 bg-surface-bright rounded animate-pulse" />
         ) : (
-          <div className="font-currency-nominal-lg text-currency-nominal-lg text-on-surface">
+          <div className="text-[22px] sm:text-[28px] font-bold text-on-surface tracking-tight">
             {formatIDR(monthly.expense)}
           </div>
         )}

@@ -47,10 +47,12 @@ const AddSavingsModal = ({ pocket, onClose, onSave }) => {
 
           {/* Amount */}
           <div className="flex flex-col gap-2">
-            <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Top Up Amount</label>
+            <label htmlFor="as-amount" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Top Up Amount</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium">Rp</span>
               <input
+                id="as-amount"
+                name="amount"
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -63,8 +65,10 @@ const AddSavingsModal = ({ pocket, onClose, onSave }) => {
 
           {/* Note */}
           <div className="flex flex-col gap-2">
-            <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Note (Optional)</label>
+            <label htmlFor="as-note" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Note (Optional)</label>
             <input
+              id="as-note"
+              name="note"
               type="text"
               value={note}
               onChange={(e) => setNote(e.target.value)}

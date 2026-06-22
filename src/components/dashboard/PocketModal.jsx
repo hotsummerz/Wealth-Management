@@ -63,8 +63,10 @@ const PocketModal = ({ onClose, onSave }) => {
         <div className="p-6 flex flex-col gap-5 max-h-[85vh] overflow-y-auto">
           {/* Name */}
           <div className="flex flex-col gap-2">
-            <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Goal Name</label>
+            <label htmlFor="pm-name" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Goal Name</label>
             <input
+              id="pm-name"
+              name="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -76,10 +78,12 @@ const PocketModal = ({ onClose, onSave }) => {
           <div className="grid grid-cols-2 gap-4">
             {/* Target */}
             <div className="flex flex-col gap-2">
-              <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Target Amount</label>
+              <label htmlFor="pm-target" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Target Amount</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium">Rp</span>
                 <input
+                  id="pm-target"
+                  name="target"
                   type="number"
                   value={target}
                   onChange={(e) => setTarget(e.target.value)}
@@ -92,10 +96,12 @@ const PocketModal = ({ onClose, onSave }) => {
 
             {/* Routine Amount */}
             <div className="flex flex-col gap-2">
-              <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Routine Amount</label>
+              <label htmlFor="pm-routine" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Routine Amount</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium">Rp</span>
                 <input
+                  id="pm-routine"
+                  name="routine_amount"
                   type="number"
                   value={routineAmount}
                   onChange={(e) => setRoutineAmount(e.target.value)}

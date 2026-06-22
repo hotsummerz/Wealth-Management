@@ -72,10 +72,12 @@ const SavingsLogModal = ({ pocket, onClose, onSave }) => {
 
           {/* Nominal Input */}
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] text-on-surface-variant uppercase font-semibold tracking-wider">Nominal</label>
+            <label htmlFor="sl-nominal" className="text-[11px] text-on-surface-variant uppercase font-semibold tracking-wider">Nominal</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium text-sm">Rp</span>
               <input
+                id="sl-nominal"
+                name="amount"
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -105,8 +107,10 @@ const SavingsLogModal = ({ pocket, onClose, onSave }) => {
 
           {/* Description */}
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] text-on-surface-variant uppercase font-semibold tracking-wider">Description</label>
+            <label htmlFor="sl-description" className="text-[11px] text-on-surface-variant uppercase font-semibold tracking-wider">Description</label>
             <input
+              id="sl-description"
+              name="note"
               type="text"
               value={note}
               onChange={(e) => setNote(e.target.value)}

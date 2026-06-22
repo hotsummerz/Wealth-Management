@@ -35,7 +35,7 @@ const QuickActions = ({ onTxSaved }) => {
   };
 
   return (
-    <section className="glass-card rounded-lg p-6 flex flex-col gap-5">
+    <section className="glass-card rounded-lg p-5 sm:p-6 flex flex-col gap-5">
       {/* Header */}
       <div className="flex items-center gap-2">
         <span className="material-symbols-outlined text-primary-container text-[20px]">bolt</span>
@@ -64,10 +64,12 @@ const QuickActions = ({ onTxSaved }) => {
 
       {/* Amount */}
       <div className="flex flex-col gap-2">
-        <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Amount</label>
+        <label htmlFor="ql-amount" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Amount</label>
         <div className="relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium">Rp</span>
           <input
+            id="ql-amount"
+            name="amount"
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -80,8 +82,10 @@ const QuickActions = ({ onTxSaved }) => {
 
       {/* Category Dropdown */}
       <div className="flex flex-col gap-2">
-        <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Category</label>
+        <label htmlFor="ql-category" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Category</label>
         <select
+          id="ql-category"
+          name="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg py-3 px-4 text-on-surface focus:outline-none focus:border-primary transition-colors appearance-none cursor-pointer"
@@ -95,8 +99,10 @@ const QuickActions = ({ onTxSaved }) => {
 
       {/* Note */}
       <div className="flex flex-col gap-2">
-        <label className="font-label-sm text-label-sm text-on-surface-variant uppercase">Note (Optional)</label>
+        <label htmlFor="ql-note" className="font-label-sm text-label-sm text-on-surface-variant uppercase">Note (Optional)</label>
         <input
+          id="ql-note"
+          name="note"
           type="text"
           value={note}
           onChange={(e) => setNote(e.target.value)}

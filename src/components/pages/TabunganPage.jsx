@@ -94,7 +94,7 @@ const SmartProjection = ({ pocket, selectedId, setSelectedId, pockets }) => {
   }
 
   return (
-    <div className="glass-card rounded-lg p-6 flex flex-col gap-5 sticky top-8">
+    <div className="glass-card rounded-lg p-5 sm:p-6 flex flex-col gap-5 lg:sticky lg:top-8">
       {/* Header */}
       <div className="flex items-center gap-2">
         <span className="material-symbols-outlined text-indigo-400 text-[20px]">auto_awesome</span>
@@ -132,6 +132,8 @@ const SmartProjection = ({ pocket, selectedId, setSelectedId, pockets }) => {
             <div className="flex items-center gap-1">
               <span className="text-on-surface-variant text-xs">Rp</span>
               <input
+                id="sp-deposit"
+                name="deposit"
                 type="number"
                 value={routineAmount}
                 onChange={(e) => {
@@ -144,6 +146,8 @@ const SmartProjection = ({ pocket, selectedId, setSelectedId, pockets }) => {
             </div>
           </div>
           <input
+            id="sp-slider"
+            name="deposit_slider"
             type="range"
             min={sliderMin}
             max={sliderMax}
@@ -176,7 +180,7 @@ const SmartProjection = ({ pocket, selectedId, setSelectedId, pockets }) => {
       {/* Projection Chart */}
       {projection.data.length > 1 && (
         <div className="h-32 w-full mt-2">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <AreaChart data={projection.data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
               <defs>
                 <linearGradient id="projGradient" x1="0" y1="0" x2="0" y2="1">
@@ -268,11 +272,11 @@ const TabunganPage = ({ refreshKey, onRefresh }) => {
   return (
     <div className="w-full flex flex-col gap-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <h1 className="font-headline-md text-[24px] text-on-surface font-semibold leading-8">Tabungan</h1>
         <button
           onClick={() => setIsPocketModalOpen(true)}
-          className="bg-primary-container text-on-primary px-4 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 hover:brightness-110 transition-all"
+          className="bg-primary-container text-on-primary px-4 py-2.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 hover:brightness-110 transition-all w-full sm:w-auto"
         >
           <span className="material-symbols-outlined text-[18px]">add</span>
           Create New Pocket

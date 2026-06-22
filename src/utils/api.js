@@ -1,4 +1,6 @@
-const API_BASE = 'http://localhost:3001/api';
+// In production (Vercel): uses /api/ routes (serverless functions)
+// In local dev: Vite proxies /api/ to Express server on port 3001
+const API_BASE = '/api';
 
 export const api = {
   // Transactions

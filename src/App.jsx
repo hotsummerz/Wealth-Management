@@ -7,6 +7,7 @@ import CashflowChart from './components/dashboard/CashflowChart';
 import TabunganPage from './components/pages/TabunganPage';
 import AnalisisPage from './components/pages/AnalisisPage';
 import Toast from './components/ui/Toast';
+import InstallPrompt from './components/ui/InstallPrompt';
 
 function App() {
   const [activeItem, setActiveItem] = useState('Home');
@@ -70,6 +71,7 @@ function App() {
       )}
 
       {toastMessage && <Toast message={toastMessage} />}
+      <InstallPrompt />
     </Layout>
   );
 }
