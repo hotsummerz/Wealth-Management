@@ -1,7 +1,7 @@
 {
   "name": "akukaya",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.4.0",
   "type": "module",
   "scripts": {
     "start": "concurrently -n FRONTEND,BACKEND -c blue,green \"npm run dev\" \"npm run server\"",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
+    "@vercel/speed-insights": "^2.0.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "recharts": "^3.8.1"

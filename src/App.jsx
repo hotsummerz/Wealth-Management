@@ -8,6 +8,7 @@ import TabunganPage from './components/pages/TabunganPage';
 import AnalisisPage from './components/pages/AnalisisPage';
 import Toast from './components/ui/Toast';
 import InstallPrompt from './components/ui/InstallPrompt';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function App() {
   const [activeItem, setActiveItem] = useState('Home');
@@ -72,6 +73,7 @@ function App() {
 
       {toastMessage && <Toast message={toastMessage} />}
       <InstallPrompt />
+      <SpeedInsights />
     </Layout>
   );
 }
