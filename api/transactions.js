@@ -3,17 +3,18 @@ import { supabase } from '../lib/supabase.js';
 export default async function handler(req, res) {
   const { method } = req;
 
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ success: false, message: 'Unauthorized' });
-  }
-
-  const token = authHeader.replace('Bearer ', '');
-  const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+  // TEMPORARY: Auth disabled for testing
+  // const authHeader = req.headers.authorization;
+  // if (!authHeader) {
+  //   return res.status(401).json({ success: false, message: 'Unauthorized' });
+  // }
+  // const token = authHeader.replace('Bearer ', '');
+  // const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+  // if (authError || !user) {
+  //   return res.status(401).json({ success: false, message: 'Unauthorized' });
+  // }
   
-  if (authError || !user) {
-    return res.status(401).json({ success: false, message: 'Unauthorized' });
-  }
+  const hardcodedUserId = '3c40622b-c427-4173-8462-83c41ac445b7'; // TEMPORARY
 
   try {
     // GET all transactions
@@ -41,7 +42,7 @@ export default async function handler(req, res) {
           amount: parseFloat(amount), 
           category, 
           note: note || '',
-          user_id: user.id
+          user_id: hardcodedUserId
         })
         .select()
         .single();
