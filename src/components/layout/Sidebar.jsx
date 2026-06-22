@@ -37,11 +37,8 @@ const Sidebar = ({ activeItem, setActiveItem, user }) => {
         })}
       </nav>
 
-      {/* Bottom - User info & Logout */}
+      {/* Bottom - Setting */}
       <div className="mt-auto flex flex-col gap-2 pt-6 border-t border-outline-variant">
-        <div className="px-4 py-2 text-sm text-on-surface-variant truncate">
-          {user?.email}
-        </div>
         <button
           onClick={() => setActiveItem('Setting')}
           className={`flex items-center w-full text-left gap-3 px-4 py-3 rounded-md transition-all ${
@@ -52,13 +49,6 @@ const Sidebar = ({ activeItem, setActiveItem, user }) => {
         >
           <span className="material-symbols-outlined">settings</span>
           Setting
-        </button>
-        <button
-          onClick={() => supabase.auth.signOut()}
-          className="flex items-center w-full text-left gap-3 px-4 py-3 rounded-md transition-all text-error hover:bg-error/10"
-        >
-          <span className="material-symbols-outlined">logout</span>
-          Logout
         </button>
       </div>
     </aside>

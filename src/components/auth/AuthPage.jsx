@@ -5,6 +5,7 @@ export default function AuthPage({ onAuthSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -25,6 +26,11 @@ export default function AuthPage({ onAuthSuccess }) {
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            data: {
+              username: username,
+            }
+          }
         });
         if (error) throw error;
         if (data.user) {
@@ -47,6 +53,22 @@ export default function AuthPage({ onAuthSuccess }) {
         </div>
 
         <form onSubmit={handleAuth} className="space-y-4">
+          {!isLogin && (
+            <div>
+              <label className="block text-sm font-medium text-on-surface mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full px-4 py-2 bg-surface border border-outline rounded-lg text-on-surface focus:outline-none focus:border-primary"
+                placeholder="yourname"
+              />
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium text-on-surface mb-2">
               Email

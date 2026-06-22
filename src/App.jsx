@@ -6,6 +6,7 @@ import QuickActions from './components/dashboard/QuickActions';
 import CashflowChart from './components/dashboard/CashflowChart';
 import TabunganPage from './components/pages/TabunganPage';
 import AnalisisPage from './components/pages/AnalisisPage';
+import SettingPage from './components/pages/SettingPage';
 import Toast from './components/ui/Toast';
 import InstallPrompt from './components/ui/InstallPrompt';
 import AuthPage from './components/auth/AuthPage';
@@ -63,7 +64,7 @@ function App() {
     <Layout activeItem={activeItem} setActiveItem={setActiveItem} user={user} onLogout={handleLogout}>
       {activeItem === 'Home' && (
         <div className="w-full flex flex-col gap-6">
-          <Header />
+          <Header user={user} />
 
           {/* 3 Metric Cards Row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -98,7 +99,14 @@ function App() {
         />
       )}
 
-      {activeItem !== 'Home' && activeItem !== 'Tabungan' && activeItem !== 'Analisis' && (
+      {activeItem === 'Setting' && (
+        <SettingPage
+          user={user}
+          onLogout={handleLogout}
+        />
+      )}
+
+      {activeItem !== 'Home' && activeItem !== 'Tabungan' && activeItem !== 'Analisis' && activeItem !== 'Setting' && (
         <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-outline-variant rounded-lg text-on-surface-variant gap-3">
           <span className="material-symbols-outlined text-4xl">construction</span>
           <p className="font-body-md text-body-md">The <strong>{activeItem}</strong> page is under construction.</p>
