@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from './components/layout/Layout';
 import Header from './components/dashboard/Header';
 import BalanceCard from './components/dashboard/BalanceCard';
@@ -8,12 +8,29 @@ import TabunganPage from './components/pages/TabunganPage';
 import AnalisisPage from './components/pages/AnalisisPage';
 import Toast from './components/ui/Toast';
 import InstallPrompt from './components/ui/InstallPrompt';
+import AuthPage from './components/auth/AuthPage';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { supabase } from './lib/supabase';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [activeItem, setActiveItem] = useState('Home');
   const [toastMessage, setToastMessage] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -25,8 +42,25 @@ function App() {
     showToast('Transaction saved!');
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-surface flex items-center justify-center">
+        <div className="text-on-surface">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <AuthPage onAuthSuccess={setUser} />;
+  }
+
   return (
-    <Layout activeItem={activeItem} setActiveItem={setActiveItem}>
+    <Layout activeItem={activeItem} setActiveItem={setActiveItem} user={user} onLogout={handleLogout}>
       {activeItem === 'Home' && (
         <div className="w-full flex flex-col gap-6">
           <Header />

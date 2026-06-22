@@ -1,6 +1,7 @@
 import React from 'react';
+import { supabase } from '../../lib/supabase';
 
-const Sidebar = ({ activeItem, setActiveItem }) => {
+const Sidebar = ({ activeItem, setActiveItem, user }) => {
   const navItems = [
     { id: 'Home', icon: 'home', label: 'Home' },
     { id: 'Tabungan', icon: 'account_balance_wallet', label: 'Tabungan' },
@@ -36,8 +37,11 @@ const Sidebar = ({ activeItem, setActiveItem }) => {
         })}
       </nav>
 
-      {/* Bottom - Setting */}
+      {/* Bottom - User info & Logout */}
       <div className="mt-auto flex flex-col gap-2 pt-6 border-t border-outline-variant">
+        <div className="px-4 py-2 text-sm text-on-surface-variant truncate">
+          {user?.email}
+        </div>
         <button
           onClick={() => setActiveItem('Setting')}
           className={`flex items-center w-full text-left gap-3 px-4 py-3 rounded-md transition-all ${
@@ -48,6 +52,13 @@ const Sidebar = ({ activeItem, setActiveItem }) => {
         >
           <span className="material-symbols-outlined">settings</span>
           Setting
+        </button>
+        <button
+          onClick={() => supabase.auth.signOut()}
+          className="flex items-center w-full text-left gap-3 px-4 py-3 rounded-md transition-all text-error hover:bg-error/10"
+        >
+          <span className="material-symbols-outlined">logout</span>
+          Logout
         </button>
       </div>
     </aside>

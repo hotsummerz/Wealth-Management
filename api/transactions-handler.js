@@ -3,6 +3,16 @@ import { supabase } from '../lib/supabase.js';
 export default async function handler(req, res) {
   const { method } = req;
 
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+  const token = authHeader.replace('Bearer ', '');
+  const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !user) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
   // DELETE transaction by id (via query param)
   if (method === 'DELETE') {
     const { id } = req.query;
@@ -24,13 +34,15 @@ export default async function handler(req, res) {
       const { data: incomeData, error: incErr } = await supabase
         .from('transactions')
         .select('amount')
-        .eq('type', 'income');
+        .eq('type', 'income')
+        .eq('user_id', user.id);
       if (incErr) throw incErr;
 
       const { data: expenseData, error: expErr } = await supabase
         .from('transactions')
         .select('amount')
-        .eq('type', 'expense');
+        .eq('type', 'expense')
+        .eq('user_id', user.id);
       if (expErr) throw expErr;
 
       const totalIncome = (incomeData || []).reduce((sum, r) => sum + Number(r.amount), 0);
@@ -55,6 +67,7 @@ export default async function handler(req, res) {
       const { data, error } = await supabase
         .from('transactions')
         .select('*')
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
       if (error) throw error;
       return res.status(200).json({ success: true, data: data || [] });

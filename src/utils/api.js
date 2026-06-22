@@ -1,31 +1,81 @@
-// In production (Vercel): uses /api/ routes (serverless functions)
-// In local dev: Vite proxies /api/ to Express server on port 3001
-const API_BASE = '/api';
+import { supabase } from '../lib/supabase';
+
+async function fetchWithAuth(url, options = {}) {
+  const { data: { session } } = await supabase.auth.getSession();
+  
+  if (!session) {
+    throw new Error('Not authenticated');
+  }
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${session.access_token}`,
+    ...options.headers,
+  };
+
+  const response = await fetch(url, {
+    ...options,
+    headers,
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'API request failed');
+  }
+
+  return response.json();
+}
 
 export const api = {
   // Transactions
-  getTransactions: () => fetch(`${API_BASE}/transactions`).then(r => r.json()),
-  getSummary: () => fetch(`${API_BASE}/transactions/summary`).then(r => r.json()),
-  getCashflow: () => fetch(`${API_BASE}/transactions/cashflow`).then(r => r.json()),
-  createTransaction: (data) => fetch(`${API_BASE}/transactions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  }).then(r => r.json()),
-  deleteTransaction: (id) => fetch(`${API_BASE}/transactions/${id}`, { method: 'DELETE' }).then(r => r.json()),
+  async createTransaction(data) {
+    return fetchWithAuth('/api/transactions', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async getTransactions() {
+    return fetchWithAuth('/api/transactions');
+  },
+
+  async deleteTransaction(id) {
+    return fetchWithAuth(`/api/transactions/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  async getSummary() {
+    return fetchWithAuth('/api/transactions/summary');
+  },
 
   // Pockets
-  getPockets: () => fetch(`${API_BASE}/pockets`).then(r => r.json()),
-  getPocketDetail: (id) => fetch(`${API_BASE}/pockets/${id}`).then(r => r.json()),
-  createPocket: (data) => fetch(`${API_BASE}/pockets`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  }).then(r => r.json()),
-  addSavings: (id, data) => fetch(`${API_BASE}/pockets/${id}/savings`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  }).then(r => r.json()),
-  deletePocket: (id) => fetch(`${API_BASE}/pockets/${id}`, { method: 'DELETE' }).then(r => r.json()),
+  async getPockets() {
+    return fetchWithAuth('/api/pockets');
+  },
+
+  async createPocket(data) {
+    return fetchWithAuth('/api/pockets', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async getPocketDetail(id) {
+    return fetchWithAuth(`/api/pockets/${id}`);
+  },
+
+  async deletePocket(id) {
+    return fetchWithAuth(`/api/pockets/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  async addPocketSaving(id, data) {
+    return fetchWithAuth(`/api/pockets/${id}/savings`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
 };
+
